@@ -13,15 +13,23 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.example.androiddevchallenge.ui.theme
+package com.example.androiddevchallenge
 
-import androidx.compose.ui.graphics.Color
+import androidx.compose.foundation.Image
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 
-val primaryColor = Color(0xFF00b0ff)
-val primaryLightColor = Color(0xFF69e2ff)
-val primaryDarkColor = Color(0xFF0081cb)
-val secondaryColor = Color(0xFF90caf9)
-val secondaryLightColor = Color(0xFFc3fdff)
-val secondaryDarkColor = Color(0xFF5d99c6)
-val primaryTextColor = Color(0xFF000000)
-val secondaryTextColor = Color(0xFF000000)
+@Composable
+fun WeatherImage(
+    imageRes: Int,
+    modifier: Modifier,
+    scale: ContentScale = ContentScale.None
+) {
+    Image(
+        painter = painterResource(id = imageRes), contentDescription = null,
+        modifier = modifier,
+        contentScale = scale
+    )
+}
