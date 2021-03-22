@@ -68,7 +68,7 @@ fun WeatherTabs(
 ) {
     TabRow(
         selectedTabIndex = tabSelected.ordinal,
-        modifier = modifier,
+        modifier = modifier.padding(vertical = 8.dp),
         backgroundColor = MaterialTheme.colors.background,
         contentColor = MaterialTheme.colors.onSurface,
         indicator = { },

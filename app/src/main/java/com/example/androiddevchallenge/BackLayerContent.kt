@@ -44,6 +44,7 @@ import com.airbnb.lottie.compose.rememberLottieAnimationState
 import com.example.androiddevchallenge.data.DailyModel
 import com.example.androiddevchallenge.data.animationByTime
 import com.example.androiddevchallenge.ui.theme.primaryColor
+import kotlin.random.Random
 
 @ExperimentalFoundationApi
 @Composable
@@ -59,7 +60,7 @@ fun BackLayerContent(item: DailyModel) {
                 modifier = Modifier
                     .fillMaxSize()
             ) {
-                Spacer(modifier = Modifier.height(40.dp))
+                Spacer(modifier = Modifier.height(30.dp))
                 Text(
                     text = stringResource(id = R.string.city),
                     modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -67,12 +68,12 @@ fun BackLayerContent(item: DailyModel) {
                 )
                 Spacer(modifier = Modifier.height(12.dp))
                 Text(
-                    text = stringResource(id = R.string.chance_rain),
+                    text = stringResource(id = R.string.chance_rain)+"${Random.nextInt(3, 25)}%",
                     modifier = Modifier.align(Alignment.CenterHorizontally),
                     style = MaterialTheme.typography.h2
                 )
 
-                Spacer(modifier = Modifier.height(32.dp))
+                Spacer(modifier = Modifier.height(30.dp))
                 Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
                     val animationSpec = LottieAnimationSpec.RawRes(animationByTime(item.time))
                     val animationState =

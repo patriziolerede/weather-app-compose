@@ -37,25 +37,46 @@ val weeklyData = listOf(
         time = TimeOfDay.Morning
     ),
     DailyModel(
-        title = "Tomorrow",
+        title = "Tomorrow 24",
         temperature = "18°",
         icon = R.drawable.ic_cloud,
         umidity = 70,
         time = TimeOfDay.Evening
     ),
     DailyModel(
-        title = "Monday",
+        title = "Thursday 25",
         temperature = "18°",
         icon = R.drawable.ic_cloudy,
         umidity = 70,
         time = TimeOfDay.Morning
     ),
     DailyModel(
-        title = "Tomorrow",
+        title = "Friday 26",
         temperature = "16°",
         icon = R.drawable.ic_rainy,
         umidity = 70,
         time = TimeOfDay.Morning
+    ),
+    DailyModel(
+        title = "Saturday 27",
+        temperature = "15°",
+        icon = R.drawable.ic_sun,
+        umidity = 67,
+        time = TimeOfDay.Morning
+    ),
+    DailyModel(
+        title = "Sunday 28",
+        temperature = "17°",
+        icon = R.drawable.ic_rainy,
+        umidity = 54,
+        time = TimeOfDay.Evening
+    ),
+    DailyModel(
+        title = "Monday 29",
+        temperature = "10°",
+        icon = R.drawable.ic_snowy,
+        umidity = 89,
+        time = TimeOfDay.Evening
     )
 )
 

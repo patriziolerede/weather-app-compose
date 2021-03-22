@@ -2,6 +2,7 @@ package com.example.androiddevchallenge
 
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -46,7 +47,7 @@ import com.example.androiddevchallenge.ui.theme.BottomSheetShape
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
 @Composable
-fun ExploreSection(
+fun BottomsheetSection(
     modifier: Modifier = Modifier,
     backDropValue: BackdropValue,
     onHeaderClicked: () -> Unit,
@@ -61,6 +62,7 @@ fun ExploreSection(
             stickyHeader {
                 Column(
                     modifier = Modifier
+                        .background(MaterialTheme.colors.onPrimary)
                         .clickable(onClick = { onHeaderClicked() })
                         .fillMaxSize()
                         .padding(top = 8.dp),
@@ -74,10 +76,12 @@ fun ExploreSection(
                         painter = painterResource(id = R.drawable.ic_up), contentDescription = null
                     )
                 }
-                Spacer(Modifier.height(8.dp))
-                LazyRow(contentPadding = PaddingValues(horizontal = 0.dp, vertical = 0.dp)) {
+                LazyRow(
+                    modifier = Modifier.background(MaterialTheme.colors.onPrimary),
+                    contentPadding = PaddingValues(horizontal = 16.dp, vertical = 8.dp)
+                ) {
                     items(weeklyData) { itemContent ->
-                        DailyItem(itemContent, onDaySelected = { daySelected = it })
+                        DailyItem(daySelected,itemContent, onDaySelected = { daySelected = it })
                     }
                 }
             }
@@ -102,7 +106,7 @@ private fun TimeItem(
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = modifier.padding(horizontal = 24.dp,vertical = 12.dp)
+        modifier = modifier.padding(horizontal = 24.dp, vertical = 12.dp)
     ) {
 
         WeatherImage(
@@ -140,7 +144,6 @@ private fun TimeItem(
     }
 }
 
-
 @Composable
 fun Divider(
     modifier: Modifier = Modifier,
@@ -153,7 +156,10 @@ fun Divider(
                 color = color,
                 start = Offset(x = 0f, y = 0f),
                 end = Offset(x = size.width, y = size.height),
-                pathEffect = PathEffect.dashPathEffect(intervals = floatArrayOf(10f, 20f), phase = 25f)
+                pathEffect = PathEffect.dashPathEffect(
+                    intervals = floatArrayOf(10f, 20f),
+                    phase = 25f
+                )
             )
         }
     )

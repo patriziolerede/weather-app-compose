@@ -20,8 +20,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.material.BackdropScaffold
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.rememberBackdropScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -80,12 +82,12 @@ fun MyApp(viewModel: MainViewModel) {
     val scaffoldState = rememberBackdropScaffoldState(initialValue = viewModel.scaffolldState())
     val coroutineScope = rememberCoroutineScope()
     BackdropScaffold(
-        modifier = Modifier,
-        headerHeight = 170.dp,
+        modifier = Modifier.background(MaterialTheme.colors.background),
+        headerHeight = 195.dp,
         scaffoldState = scaffoldState,
         frontLayerScrimColor = Color.Transparent,
         appBar = {
-            HomeTabBar( tabSelected, onTabSelected = { tabSelected = it })
+            HomeTabBar(tabSelected, onTabSelected = { tabSelected = it })
         },
         backLayerContent = {
             dayWeatherByTime(tabSelected)?.let {
@@ -93,7 +95,7 @@ fun MyApp(viewModel: MainViewModel) {
             }
         },
         frontLayerContent = {
-            ExploreSection(
+            BottomsheetSection(
                 backDropValue = scaffoldState.currentValue,
                 onHeaderClicked = {
                     coroutineScope.launch {
