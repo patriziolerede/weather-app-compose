@@ -10,4 +10,6 @@
       the License.
       -->
     <string name="app_name">AndroidDevChallenge</string>
+    <string name="city">Los Angeles</string>
+    <string name="chance_rain">Chance of Rain: 3%</string>
 </resources>

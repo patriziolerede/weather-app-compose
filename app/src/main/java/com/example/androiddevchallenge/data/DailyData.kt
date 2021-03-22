@@ -27,34 +27,32 @@ data class DailyModel(
     val time: TimeOfDay
 )
 
-val emptyDailyModel = DailyModel("",R.drawable.ic_11_sunny,"",0,TimeOfDay.Morning)
-
 val weeklyData = listOf(
     DailyModel(
         title = "Today",
-        temperature = "5°/7°",
-        icon = R.drawable.ic_12_windy,
+        temperature = "22°",
+        icon = R.drawable.ic_sun,
         umidity = 95,
         time = TimeOfDay.Morning
     ),
     DailyModel(
         title = "Tomorrow",
-        temperature = "6°/8°",
-        icon = R.drawable.ic_14_hail,
+        temperature = "18°",
+        icon = R.drawable.ic_cloud,
         umidity = 70,
         time = TimeOfDay.Evening
     ),
     DailyModel(
         title = "Monday",
-        temperature = "6°/8°",
-        icon = R.drawable.ic_11_sunny,
+        temperature = "18°",
+        icon = R.drawable.ic_cloudy,
         umidity = 70,
         time = TimeOfDay.Morning
     ),
     DailyModel(
         title = "Tomorrow",
-        temperature = "6°/8°",
-        icon = R.drawable.ic_15_sunrise,
+        temperature = "16°",
+        icon = R.drawable.ic_rainy,
         umidity = 70,
         time = TimeOfDay.Morning
     )
@@ -63,29 +61,29 @@ val weeklyData = listOf(
 val dayData = listOf(
     DailyModel(
         title = "Today",
-        temperature = "5°/7°",
-        icon = R.drawable.ic_12_windy,
+        temperature = "17°",
+        icon = R.drawable.ic_storm,
         umidity = 95,
         time = TimeOfDay.Morning
     ),
     DailyModel(
         title = "Today",
-        temperature = "6°/8°",
-        icon = R.drawable.ic_14_hail,
+        temperature = "19°",
+        icon = R.drawable.ic_snowy,
         umidity = 70,
         time = TimeOfDay.Afternoon
     ),
     DailyModel(
         title = "Today",
-        temperature = "6°/8°",
-        icon = R.drawable.ic_11_sunny,
+        temperature = "15°",
+        icon = R.drawable.ic_night,
         umidity = 70,
         time = TimeOfDay.Evening
     ),
     DailyModel(
         title = "Today",
-        temperature = "6°/8°",
-        icon = R.drawable.ic_15_sunrise,
+        temperature = "14°",
+        icon = R.drawable.ic_cloud,
         umidity = 70,
         time = TimeOfDay.Overnight
     )

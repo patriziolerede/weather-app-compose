@@ -28,6 +28,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -35,6 +36,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.androiddevchallenge.data.dayWeatherByTime
 import com.example.androiddevchallenge.ui.theme.MyTheme
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private val viewModel by viewModels<MainViewModel>()
@@ -78,10 +80,11 @@ private fun HomeTabBar(
 fun MyApp(viewModel: MainViewModel) {
 
     var tabSelected by remember { mutableStateOf(TimeOfDay.Morning) }
-    val scaffoldState = rememberBackdropScaffoldState(initialValue = BackdropValue.Revealed)
+    val scaffoldState = rememberBackdropScaffoldState(initialValue = viewModel.scaffolldState())
+    val coroutineScope = rememberCoroutineScope()
     BackdropScaffold(
         modifier = Modifier,
-        headerHeight = 100.dp,
+        headerHeight = 150.dp,
         scaffoldState = scaffoldState,
         frontLayerScrimColor = Color.Transparent,
         appBar = {
@@ -94,7 +97,17 @@ fun MyApp(viewModel: MainViewModel) {
         },
         frontLayerContent = {
             ExploreSection(
-                backDropValue = scaffoldState.currentValue
+                backDropValue = scaffoldState.currentValue,
+                onHeaderClicked = {
+                    coroutineScope.launch {
+                        if (scaffoldState.isConcealed) {
+                            scaffoldState.reveal()
+                        } else {
+                            scaffoldState.conceal()
+                        }
+                    }
+                    viewModel.onScaffoldStateChanged()
+                }
             )
         }
     )

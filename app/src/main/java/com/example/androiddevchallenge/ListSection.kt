@@ -1,6 +1,7 @@
 package com.example.androiddevchallenge
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -17,7 +18,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.BackdropScaffoldState
 import androidx.compose.material.BackdropValue
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
@@ -34,17 +34,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.androiddevchallenge.data.DailyModel
 import com.example.androiddevchallenge.data.ExploreModel
-import com.example.androiddevchallenge.data.emptyDailyModel
 import com.example.androiddevchallenge.data.listByDay
 import com.example.androiddevchallenge.data.weeklyData
 import com.example.androiddevchallenge.ui.theme.BottomSheetShape
-import dev.chrisbanes.accompanist.coil.CoilImage
 
 typealias OnExploreItemClicked = (ExploreModel) -> Unit
 
@@ -53,11 +50,12 @@ typealias OnExploreItemClicked = (ExploreModel) -> Unit
 @Composable
 fun ExploreSection(
     modifier: Modifier = Modifier,
-    backDropValue: BackdropValue
+    backDropValue: BackdropValue,
+    onHeaderClicked: () -> Unit,
 ) {
     Surface(modifier = modifier.fillMaxSize(), color = Color.White, shape = BottomSheetShape) {
         val listState = rememberLazyListState()
-        var daySelected by remember { mutableStateOf(emptyDailyModel) }
+        var daySelected by remember { mutableStateOf(weeklyData.first()) }
         LazyColumn(
             state = listState,
             modifier = Modifier.fillMaxSize()
@@ -65,6 +63,7 @@ fun ExploreSection(
             stickyHeader {
                 Column(
                     modifier = Modifier
+                        .clickable(onClick = { onHeaderClicked() })
                         .fillMaxSize()
                         .padding(top = 8.dp),
                     horizontalAlignment = Alignment.CenterHorizontally
@@ -72,7 +71,8 @@ fun ExploreSection(
                     Icon(
                         modifier = Modifier
                             .rotate(backDropValue.degreesFromState())
-                            .size(18.dp),
+                            .width(24.dp)
+                            .height(12.dp),
                         painter = painterResource(id = R.drawable.ic_up), contentDescription = null
                     )
                 }
@@ -122,10 +122,20 @@ private fun ExploreItem(
             text = item.title,
             style = MaterialTheme.typography.h6
         )
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.width(8.dp))
+        WeatherImage(
+            modifier = Modifier.size(24.dp),
+            imageRes = R.drawable.ic_warm,
+            scale = ContentScale.Crop,
+        )
         Text(
             text = item.temperature,
             style = MaterialTheme.typography.caption
+        )
+        WeatherImage(
+            modifier = Modifier.size(24.dp),
+            imageRes = R.drawable.ic_humidity,
+            scale = ContentScale.Crop,
         )
         Text(
             text = item.umidity.toString(),

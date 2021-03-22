@@ -28,7 +28,6 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import com.example.androiddevchallenge.data.DailyModel
@@ -45,7 +44,6 @@ fun DailyItem(itemContent: DailyModel,  onDaySelected: (DailyModel) -> Unit) {
 
         WeatherImage(
             modifier = Modifier
-                .clip(CircleShape)
                 .height(88.dp)
                 .width(88.dp),
             imageRes = itemContent.icon,
