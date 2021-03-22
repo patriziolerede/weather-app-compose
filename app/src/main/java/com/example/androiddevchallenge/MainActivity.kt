@@ -84,6 +84,7 @@ fun MyApp(viewModel: MainViewModel) {
     BackdropScaffold(
         modifier = Modifier.background(MaterialTheme.colors.background),
         headerHeight = 195.dp,
+        peekHeight = 100.dp,
         scaffoldState = scaffoldState,
         frontLayerScrimColor = Color.Transparent,
         appBar = {
