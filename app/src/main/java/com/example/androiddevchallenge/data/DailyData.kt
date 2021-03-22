@@ -120,13 +120,12 @@ fun listByDay(day: DailyModel) = (0..23).map {
             1 -> R.drawable.ic_storm
             2 -> R.drawable.ic_cloudy
             3 -> R.drawable.ic_sun
-            else->R.drawable.ic_rainy
+            else -> R.drawable.ic_rainy
         },
         umidity = Random.nextInt(50, 98),
         time = TimeOfDay.values().random()
     )
 }
-
 
 fun animationByTime(time: TimeOfDay): Int {
     return when (time) {
@@ -161,5 +160,3 @@ val nightAnimations = listOf(
     R.raw.weather_night_snow,
     R.raw.weather_night_thunderstorm
 )
-
-

@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.example.androiddevchallenge.data
 
 import androidx.compose.runtime.Immutable
@@ -27,7 +26,6 @@ data class City(
 ) {
     val nameToDisplay = "$name, $country"
 }
-
 
 val MADRID = City(
     name = "Madrid",

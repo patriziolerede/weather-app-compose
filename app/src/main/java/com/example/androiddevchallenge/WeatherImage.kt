@@ -26,7 +26,7 @@ fun WeatherImage(
     imageRes: Int,
     modifier: Modifier,
     scale: ContentScale = ContentScale.None,
-    description :String? = null
+    description: String? = null
 ) {
     Image(
         painter = painterResource(id = imageRes), contentDescription = description,
