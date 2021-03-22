@@ -1,7 +1,9 @@
 package com.example.androiddevchallenge
 
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -16,8 +18,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BackdropValue
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Icon
@@ -31,19 +31,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.PathEffect
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.example.androiddevchallenge.data.DailyModel
-import com.example.androiddevchallenge.data.ExploreModel
 import com.example.androiddevchallenge.data.listByDay
 import com.example.androiddevchallenge.data.weeklyData
 import com.example.androiddevchallenge.ui.theme.BottomSheetShape
-
-typealias OnExploreItemClicked = (ExploreModel) -> Unit
 
 @ExperimentalMaterialApi
 @ExperimentalFoundationApi
@@ -86,41 +84,38 @@ fun ExploreSection(
 
 
             items(items = listByDay(daySelected)) {
-                ExploreItem(
+                TimeItem(
                     modifier = Modifier.fillMaxWidth(),
                     item = it
                 )
+                Divider()
             }
         }
     }
 }
 
 @Composable
-private fun ExploreItem(
+private fun TimeItem(
     modifier: Modifier = Modifier,
     item: DailyModel
 ) {
     Row(
-        modifier = modifier
-            .padding(top = 12.dp, bottom = 12.dp)
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween,
+        modifier = modifier.padding(horizontal = 24.dp,vertical = 12.dp)
     ) {
-        ExploreImageContainer {
-            WeatherImage(
-                modifier = Modifier
-                    .clip(CircleShape)
-                    .height(88.dp)
-                    .width(88.dp),
-                imageRes = item.icon,
-                description = item.title,
-                scale = ContentScale.Crop
-            )
 
-        }
-        Spacer(Modifier.width(24.dp))
+        WeatherImage(
+            modifier = Modifier.size(24.dp),
+            imageRes = item.icon,
+            description = item.title,
+            scale = ContentScale.Crop
+        )
 
+        Spacer(Modifier.width(8.dp))
         Text(
             text = item.title,
-            style = MaterialTheme.typography.h6
+            style = MaterialTheme.typography.caption
         )
         Spacer(Modifier.width(8.dp))
         WeatherImage(
@@ -133,7 +128,7 @@ private fun ExploreItem(
             style = MaterialTheme.typography.caption
         )
         WeatherImage(
-            modifier = Modifier.size(24.dp),
+            modifier = Modifier.size(20.dp),
             imageRes = R.drawable.ic_humidity,
             scale = ContentScale.Crop,
         )
@@ -145,11 +140,23 @@ private fun ExploreItem(
     }
 }
 
+
 @Composable
-private fun ExploreImageContainer(children: @Composable () -> Unit) {
-    Surface(Modifier.size(width = 60.dp, height = 60.dp), RoundedCornerShape(4.dp)) {
-        children()
-    }
+fun Divider(
+    modifier: Modifier = Modifier,
+    color: Color = MaterialTheme.colors.onSurface.copy(alpha = 0.5f)
+) {
+    Canvas(
+        modifier = modifier.fillMaxWidth(),
+        onDraw = {
+            drawLine(
+                color = color,
+                start = Offset(x = 0f, y = 0f),
+                end = Offset(x = size.width, y = size.height),
+                pathEffect = PathEffect.dashPathEffect(intervals = floatArrayOf(10f, 20f), phase = 25f)
+            )
+        }
+    )
 }
 
 @ExperimentalMaterialApi

@@ -16,20 +16,14 @@
 
 package com.example.androiddevchallenge
 
-import androidx.compose.material.BackdropScaffoldState
 import androidx.compose.material.BackdropValue
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.androiddevchallenge.data.ExploreModel
-import com.example.androiddevchallenge.data.cities
 
 class MainViewModel : ViewModel() {
 
     private val _scaffoldExpanded = MutableLiveData(false)
-
-    val scaffoldExpanded: LiveData<Boolean> get() = _scaffoldExpanded
 
     fun onScaffoldStateChanged() {
         _scaffoldExpanded.value = _scaffoldExpanded.value?.not()

@@ -18,6 +18,7 @@ package com.example.androiddevchallenge.data
 import androidx.annotation.DrawableRes
 import com.example.androiddevchallenge.R
 import com.example.androiddevchallenge.TimeOfDay
+import kotlin.random.Random
 
 data class DailyModel(
     val title: String,
@@ -76,7 +77,7 @@ val dayData = listOf(
     DailyModel(
         title = "Today",
         temperature = "15°",
-        icon = R.drawable.ic_night,
+        icon = R.drawable.ic_storm,
         umidity = 70,
         time = TimeOfDay.Evening
     ),
@@ -89,6 +90,23 @@ val dayData = listOf(
     )
 )
 
+fun listByDay(day: DailyModel) = (0..23).map {
+    DailyModel(
+        title = it.toString().padStart(2, '0') + ":00",
+        temperature = "${Random.nextInt(18, 25)}°",
+        icon = when (Random.nextInt(0, 4)) {
+            0 -> R.drawable.ic_cloud
+            1 -> R.drawable.ic_storm
+            2 -> R.drawable.ic_cloudy
+            3 -> R.drawable.ic_sun
+            else->R.drawable.ic_rainy
+        },
+        umidity = Random.nextInt(50, 98),
+        time = TimeOfDay.values().random()
+    )
+}
+
+
 fun animationByTime(time: TimeOfDay): Int {
     return when (time) {
         TimeOfDay.Morning, TimeOfDay.Day -> dayAnimations.random()
@@ -99,8 +117,6 @@ fun animationByTime(time: TimeOfDay): Int {
 fun dayWeatherByTime(time: TimeOfDay): DailyModel? {
     return dayData.firstOrNull { it.time == time }
 }
-
-fun listByDay(day: DailyModel) = weeklyData.filter { it.title == day.title }
 
 val dayAnimations = listOf(
     R.raw.weather_day_broken_clouds,
