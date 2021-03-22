@@ -17,101 +17,105 @@ package com.example.androiddevchallenge
 
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material.BackdropScaffold
+import androidx.compose.material.BackdropValue
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.rememberBackdropScaffoldState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.androiddevchallenge.data.dayWeatherByTime
 import com.example.androiddevchallenge.ui.theme.MyTheme
 
 class MainActivity : AppCompatActivity() {
+    private val viewModel by viewModels<MainViewModel>()
+
+    @ExperimentalFoundationApi
+    @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MyTheme {
-                MyApp()
+                MyApp(viewModel = viewModel)
             }
         }
+    }
+}
+
+@Composable
+private fun HomeTabBar(
+    openDrawer: () -> Unit,
+    tabSelected: TimeOfDay,
+    onTabSelected: (TimeOfDay) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    CraneTabBar(
+        modifier = modifier,
+        onMenuClicked = openDrawer
+    ) { tabBarModifier ->
+        WeatherTabs(
+            modifier = tabBarModifier,
+            titles = TimeOfDay.values().map { it.name },
+            tabSelected = tabSelected,
+            onTabSelected = { newTab -> onTabSelected(TimeOfDay.values()[newTab.ordinal]) }
+        )
     }
 }
 
 // Start building your app here!
+@ExperimentalFoundationApi
+@ExperimentalMaterialApi
 @Composable
-fun MyApp() {
-    Surface(color = MaterialTheme.colors.background) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colors.background)
-        ) {
+fun MyApp(viewModel: MainViewModel) {
 
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-            ) {
-                Spacer(modifier = Modifier.height(40.dp))
-                Text(
-                    text = "Los Angeles",
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    style = MaterialTheme.typography.h2
-                )
-                Text(
-                    text = "Chance of Rain: 3%",
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    style = MaterialTheme.typography.h2
-                )
-                Text(
-                    text = "23°",
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    style = MaterialTheme.typography.h1
-                )
-                Spacer(modifier = Modifier.height(32.dp))
-                WeatherImage(
-                    imageRes = R.drawable.ic_11_sunny,
-                    modifier = Modifier.height(46.dp).width(46.dp),
-                    scale = ContentScale.Crop
-                )
-
-
+    var tabSelected by remember { mutableStateOf(TimeOfDay.Morning) }
+    val scaffoldState = rememberBackdropScaffoldState(initialValue = BackdropValue.Revealed)
+    BackdropScaffold(
+        modifier = Modifier,
+        headerHeight = 100.dp,
+        scaffoldState = scaffoldState,
+        frontLayerScrimColor = Color.Transparent,
+        appBar = {
+            HomeTabBar({ }, tabSelected, onTabSelected = { tabSelected = it })
+        },
+        backLayerContent = {
+            dayWeatherByTime(tabSelected)?.let {
+                BackLayerContent(it)
             }
+        },
+        frontLayerContent = {
+            ExploreSection(
+                backDropValue = scaffoldState.currentValue
+            )
         }
-    }
+    )
 }
 
+@ExperimentalFoundationApi
+@ExperimentalMaterialApi
 @Preview("Light Theme", widthDp = 360, heightDp = 640)
 @Composable
 fun LightPreview() {
     MyTheme {
-        MyApp()
+        MyApp(MainViewModel())
     }
 }
 
+@ExperimentalFoundationApi
+@ExperimentalMaterialApi
 @Preview("Dark Theme", widthDp = 360, heightDp = 640)
 @Composable
 fun DarkPreview() {
     MyTheme(darkTheme = true) {
-        MyApp()
+        MyApp(MainViewModel())
     }
 }

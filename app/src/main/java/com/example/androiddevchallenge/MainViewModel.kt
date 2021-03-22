@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 The Android Open Source Project
+ * Copyright 2020 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,24 +13,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.example.androiddevchallenge
 
-import androidx.compose.foundation.Image
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
+import com.example.androiddevchallenge.data.ExploreModel
+import com.example.androiddevchallenge.data.cities
 
-@Composable
-fun WeatherImage(
-    imageRes: Int,
-    modifier: Modifier,
-    scale: ContentScale = ContentScale.None,
-    description :String
-) {
-    Image(
-        painter = painterResource(id = imageRes), contentDescription = description,
-        modifier = modifier,
-        contentScale = scale
-    )
+class MainViewModel : ViewModel() {
+
+    private val _suggestedDestinations = MutableLiveData<List<ExploreModel>>()
+    val suggestedDestinations: LiveData<List<ExploreModel>>
+        get() = _suggestedDestinations
+
+    init {
+        _suggestedDestinations.value = cities
+    }
 }
+
+

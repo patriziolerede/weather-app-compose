@@ -16,11 +16,15 @@
 package com.example.androiddevchallenge.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.shape.ZeroCornerSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 
 private val DarkColorPalette = lightColors(
     primary = primaryDarkColor,
@@ -34,16 +38,17 @@ private val DarkColorPalette = lightColors(
 )
 
 private val LightColorPalette = darkColors(
-    primary = primaryLightColor,
+    primary = primaryColor,
     secondary = secondaryLightColor,
     background = secondaryColor,
-    surface = primaryColor,
+    surface = primaryLightColor,
     onPrimary = Color.White,
     onSecondary = Color.White,
     onBackground = primaryColor,
     onSurface = primaryColor
 )
 
+val BottomSheetShape = RoundedCornerShape(corner =CornerSize(20.dp) )
 @Composable
 fun MyTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable() () -> Unit) {
     val colors = if (darkTheme) {
