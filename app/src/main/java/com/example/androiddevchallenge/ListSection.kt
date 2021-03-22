@@ -52,7 +52,7 @@ fun BottomsheetSection(
     backDropValue: BackdropValue,
     onHeaderClicked: () -> Unit,
 ) {
-    Surface(modifier = modifier.fillMaxSize(), color = Color.White, shape = BottomSheetShape) {
+    Surface(modifier = modifier.fillMaxSize(), color = MaterialTheme.colors.onPrimary, shape = BottomSheetShape) {
         val listState = rememberLazyListState()
         var daySelected by remember { mutableStateOf(weeklyData.first()) }
         LazyColumn(

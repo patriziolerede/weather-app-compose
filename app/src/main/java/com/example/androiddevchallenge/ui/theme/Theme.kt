@@ -28,10 +28,10 @@ import androidx.compose.ui.unit.dp
 
 private val DarkColorPalette = lightColors(
     primary = primaryDarkColor,
-    secondary = secondaryDarkColor,
-    background = secondaryColor,
+    secondary = secondaryColor,
+    background = primaryDarkColor,
     surface = primaryColor,
-    onPrimary = primaryTextColor,
+    onPrimary = secondaryLightColor,
     onSecondary = secondaryTextColor,
     onBackground = primaryColor,
     onSurface = primaryColor
