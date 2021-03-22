@@ -18,9 +18,12 @@ package com.example.androiddevchallenge
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
@@ -31,66 +34,77 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
+import java.sql.Time
 
 @Composable
-fun CraneTabBar(
+fun WeatherTabBar(
     modifier: Modifier = Modifier,
-    onMenuClicked: () -> Unit,
     children: @Composable (Modifier) -> Unit
 ) {
     Row(modifier) {
-        // Separate Row as the children shouldn't have the padding
-        Row(Modifier.padding(top = 8.dp)) {
-
-            Spacer(Modifier.width(8.dp))
-
-        }
         children(
             Modifier
                 .weight(1f)
-                .align(Alignment.CenterVertically))
+                .align(Alignment.CenterVertically)
+        )
     }
 }
 
-enum class TimeOfDay {
-    Morning, Afternoon, Evening, Overnight
+enum class TimeOfDay(val resourceId: Int) {
+    Morning(R.drawable.ic_dawn),
+    Day(R.drawable.ic_day),
+    Evening(R.drawable.ic_sunset),
+    Night(R.drawable.ic_night)
 }
 
 @Composable
 fun WeatherTabs(
     modifier: Modifier = Modifier,
-    titles: List<String>,
+    tabs: List<TimeOfDay>,
     tabSelected: TimeOfDay,
     onTabSelected: (TimeOfDay) -> Unit
 ) {
     TabRow(
         selectedTabIndex = tabSelected.ordinal,
         modifier = modifier,
+        backgroundColor = MaterialTheme.colors.background,
         contentColor = MaterialTheme.colors.onSurface,
         indicator = { },
         divider = { }
     ) {
-        titles.forEachIndexed { index, title ->
+        tabs.forEachIndexed { index, tab ->
             val selected = index == tabSelected.ordinal
 
-            var textModifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp)
+            var tabModifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp)
             if (selected) {
-                textModifier =
+                tabModifier =
                     Modifier
                         .border(BorderStroke(2.dp, Color.White), RoundedCornerShape(16.dp))
-                        .then(textModifier)
+                        .then(tabModifier)
             }
 
             Tab(
                 selected = selected,
                 onClick = { onTabSelected(TimeOfDay.values()[index]) }
             ) {
-                Text(
-                    modifier = textModifier,
-                    style = MaterialTheme.typography.body1,
-                    text = title
-                )
+                Column(
+                    modifier = tabModifier,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        style = MaterialTheme.typography.body1.copy(color = Color.White),
+
+                        text = tab.name
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    WeatherImage(
+                        scale = ContentScale.Crop,
+                        imageRes = tab.resourceId,
+                        modifier = Modifier.size(24.dp)
+                    )
+                }
             }
         }
     }

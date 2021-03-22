@@ -71,7 +71,7 @@ val dayData = listOf(
         temperature = "19°",
         icon = R.drawable.ic_snowy,
         umidity = 70,
-        time = TimeOfDay.Afternoon
+        time = TimeOfDay.Day
     ),
     DailyModel(
         title = "Today",
@@ -85,14 +85,14 @@ val dayData = listOf(
         temperature = "14°",
         icon = R.drawable.ic_cloud,
         umidity = 70,
-        time = TimeOfDay.Overnight
+        time = TimeOfDay.Night
     )
 )
 
 fun animationByTime(time: TimeOfDay): Int {
     return when (time) {
-        TimeOfDay.Morning, TimeOfDay.Afternoon -> dayAnimations.random()
-        TimeOfDay.Evening, TimeOfDay.Overnight -> nightAnimations.random()
+        TimeOfDay.Morning, TimeOfDay.Day -> dayAnimations.random()
+        TimeOfDay.Evening, TimeOfDay.Night -> nightAnimations.random()
     }
 }
 

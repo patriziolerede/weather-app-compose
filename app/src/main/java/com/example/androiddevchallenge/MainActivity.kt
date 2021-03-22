@@ -21,7 +21,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.material.BackdropScaffold
-import androidx.compose.material.BackdropValue
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.rememberBackdropScaffoldState
 import androidx.compose.runtime.Composable
@@ -55,18 +54,16 @@ class MainActivity : AppCompatActivity() {
 
 @Composable
 private fun HomeTabBar(
-    openDrawer: () -> Unit,
     tabSelected: TimeOfDay,
     onTabSelected: (TimeOfDay) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    CraneTabBar(
-        modifier = modifier,
-        onMenuClicked = openDrawer
+    WeatherTabBar(
+        modifier = modifier
     ) { tabBarModifier ->
         WeatherTabs(
             modifier = tabBarModifier,
-            titles = TimeOfDay.values().map { it.name },
+            tabs = TimeOfDay.values().toList(),
             tabSelected = tabSelected,
             onTabSelected = { newTab -> onTabSelected(TimeOfDay.values()[newTab.ordinal]) }
         )
@@ -84,11 +81,11 @@ fun MyApp(viewModel: MainViewModel) {
     val coroutineScope = rememberCoroutineScope()
     BackdropScaffold(
         modifier = Modifier,
-        headerHeight = 150.dp,
+        headerHeight = 170.dp,
         scaffoldState = scaffoldState,
         frontLayerScrimColor = Color.Transparent,
         appBar = {
-            HomeTabBar({ }, tabSelected, onTabSelected = { tabSelected = it })
+            HomeTabBar( tabSelected, onTabSelected = { tabSelected = it })
         },
         backLayerContent = {
             dayWeatherByTime(tabSelected)?.let {
